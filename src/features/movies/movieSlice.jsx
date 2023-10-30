@@ -37,21 +37,39 @@ const movieSlice = createSlice({
       state.movies = payload;
     },
   },
-  extraReducers: {
-    [fetchAsyncMovies.pending]: () => {
-      console.log("pending");
-    },
-    [fetchAsyncMovies.fulfilled]: (state, payload) => {
-      console.log("fetched successfully");
-      return { ...state, movies: payload };
-    },
-    [fetchAsyncMovies.rejected]: () => {
-      console.log("reject");
-    },
-    [fetchAsyncShows.fulfilled]: (state, payload) => {
-      console.log("fetched successfully");
-      return { ...state, shows: payload };
-    },
+  // extraReducers: {
+  //   [fetchAsyncMovies.pending]: () => {
+  //     console.log("pending");
+  //   },
+  //   [fetchAsyncMovies.fulfilled]: (state, payload) => {
+  //     console.log("fetched successfully");
+  //     return { ...state, movies: payload };
+  //   },
+  //   [fetchAsyncMovies.rejected]: () => {
+  //     console.log("reject");
+  //   },
+  //   [fetchAsyncShows.fulfilled]: (state, payload) => {
+  //     console.log("fetched successfully");
+  //     return { ...state, shows: payload };
+  //   },
+  // },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAsyncMovies.pending, () => {
+        console.log("pending");
+      })
+      .addCase(fetchAsyncMovies.fulfilled, (state, { payload }) => {
+        console.log("fetched successfully");
+        return { ...state, movies: payload };
+      })
+      .addCase(fetchAsyncMovies.rejected, () => {
+        console.log("reject");
+      })
+      .addCase(fetchAsyncShows.fulfilled, (state, { payload }) => {
+        console.log("fetched successfully");
+        return { ...state, shows: payload };
+      });
   },
 });
 

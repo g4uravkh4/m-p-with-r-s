@@ -1,4 +1,4 @@
-import { createAction, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import MovieApi from "../../common/api/MovieApi";
 import { APIKey } from "../../common/api/MovieApiKey";
 
@@ -24,9 +24,18 @@ export const fetchAsyncShows = createAsyncThunk(
   }
 );
 
+export const fetchAsyncMSDetail = createAsyncThunk(
+  "movies/fetchAsyncMSDetail",
+  async (id) => {
+    const response = await MovieApi.get(`?APIKey=${APIKey}&i=${id}&Plot=full`);
+    return response.data;
+  }
+);
+
 const initialState = {
   movies: {},
   shows: {},
+  selectedMS: {},
 };
 
 const movieSlice = createSlice({
@@ -37,23 +46,6 @@ const movieSlice = createSlice({
       state.movies = payload;
     },
   },
-  // extraReducers: {
-  //   [fetchAsyncMovies.pending]: () => {
-  //     console.log("pending");
-  //   },
-  //   [fetchAsyncMovies.fulfilled]: (state, payload) => {
-  //     console.log("fetched successfully");
-  //     return { ...state, movies: payload };
-  //   },
-  //   [fetchAsyncMovies.rejected]: () => {
-  //     console.log("reject");
-  //   },
-  //   [fetchAsyncShows.fulfilled]: (state, payload) => {
-  //     console.log("fetched successfully");
-  //     return { ...state, shows: payload };
-  //   },
-  // },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchAsyncMovies.pending, () => {
@@ -69,6 +61,10 @@ const movieSlice = createSlice({
       .addCase(fetchAsyncShows.fulfilled, (state, { payload }) => {
         console.log("fetched successfully");
         return { ...state, shows: payload };
+      })
+      .addCase(fetchAsyncMSDetail.fulfilled, (state, { payload }) => {
+        console.log("details fetched successfully");
+        return { ...state, selectedMS: payload };
       });
   },
 });
@@ -76,4 +72,5 @@ const movieSlice = createSlice({
 export const { addMovies } = movieSlice.actions;
 export const getAllMovies = (state) => state.movies.movies;
 export const getAllShows = (state) => state.movies.shows;
+export const getSelectedMS = (state) => state.movies.selectedMS;
 export default movieSlice.reducer;

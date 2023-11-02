@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncMSDetail,
   getSelectedMS,
+  removeSelectedMS,
 } from "../../features/movies/movieSlice";
 import "./MovieDetails.scss";
 
@@ -14,6 +15,9 @@ function MovieDetails() {
   console.log(data);
   useEffect(() => {
     dispatch(fetchAsyncMSDetail(imdbID));
+    return () => {
+      dispatch(removeSelectedMS());
+    };
   }, [dispatch, imdbID]);
 
   return (

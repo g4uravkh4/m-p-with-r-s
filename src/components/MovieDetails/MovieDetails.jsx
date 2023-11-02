@@ -5,6 +5,7 @@ import {
   fetchAsyncMSDetail,
   getSelectedMS,
 } from "../../features/movies/movieSlice";
+import "./MovieDetails.scss";
 
 function MovieDetails() {
   const { imdbID } = useParams();
@@ -45,7 +46,7 @@ function MovieDetails() {
           </div>
           <div>
             <span>Generes</span>
-            <span>{data.Genere}</span>
+            <span>{data.Genre}</span>
           </div>
           <div>
             <span>Languages</span>
@@ -56,9 +57,9 @@ function MovieDetails() {
             <span>{data.Awards}</span>
           </div>
         </div>
-        <div className="section-right">
-          <img src={data.Poster} alt={data.Title} />
-        </div>
+      </div>
+      <div className="section-right">
+        <img src={data.Poster} alt={data.Title} />
       </div>
     </div>
   );

@@ -8,9 +8,11 @@ import {
 
 function Home() {
   const dispatch = useDispatch();
+  const movieTxt = "Harry Potter";
+  const showTxt = "Game of Thrones";
   useEffect(() => {
-    dispatch(fetchAsyncMovies());
-    dispatch(fetchAsyncShows());
+    dispatch(fetchAsyncMovies(movieTxt));
+    dispatch(fetchAsyncShows(showTxt));
   }, [dispatch]);
   return (
     <div>
